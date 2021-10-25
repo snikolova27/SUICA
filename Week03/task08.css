@@ -1,0 +1,42 @@
+body
+{
+    background-color: wheat;
+    color: #A0522D;
+    text-align: justify;
+    font-family: Arial;
+
+}
+
+h1{
+    text-align:center;
+}
+h1,h2{
+    background-color: white;
+}
+
+p{
+    margin-left:2cm;
+    margin-right: 2cm;
+}
+li{
+    margin-left:1.3cm;
+    margin-right: 2 cm;
+}
+p i {
+    color:red;
+}
+
+#formula {
+    text-align: center;
+    font-family: 'Times New Roman';
+    color:red;
+    font-size:28px;
+
+}
+
+.framed
+{
+    border: ridge;
+    border-color: #A0522D;
+    border-width: 2px;
+}
