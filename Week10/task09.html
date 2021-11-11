@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="suica.min.js"></script>
+
+	<script>
+		function main(x,y,z,a,n)
+		{
+			new Suica();
+			oxyz();
+			demo();
+			
+             var iniy = y;
+            var k=n; 
+
+            for(var j = 1; j<=n;j++)
+            {
+                for(var i =1; i<=k;i++)
+                    {
+                    s = cube([x,y,z],a);
+                    s.mode = Suica.SOLID;
+                    y = y+a;
+                    s.color = [Math.random(),Math.random(),Math.random()];
+                    }
+                k = k-1;
+                y  = iniy + a/2*j;
+                z = z+a;
+            }
+		}
+	</script>	
+</head>
+
+<body onload="main(4,4,0,4,8)">
+	<noscript>
+		Искаме JavaScript, но няма!
+	</noscript>
+	
+	<canvas width="900" height="600" style="border: solid 1px Black;">
+		Искаме canvas, но няма!
+	</canvas>
+</body>
+</html>

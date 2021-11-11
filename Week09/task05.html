@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "suica.min.js"></script>
+        <script>
+        function vLen(a)
+           {
+               return Math.sqrt(a[0] * a[0] + a[1]*a[1] + a[2]*a[2]);
+           }
+           function vector(point1, point2)
+           {
+               return [point2[0] - point1[0], point2[1] - point1[1], point2 [2] - point1[2]];
+           }
+
+           function scalar(vector1, vector2)
+           {
+               return (vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2]);
+           }
+           function cals()
+           {
+               var ax = document.getElementById("xa").value;
+               var ay = document.getElementById("ya").value;
+               var az = document.getElementById("za").value;
+               var bx  =document.getElementById("xb").value;
+               var by = document.getElementById("yb").value;
+               var bz = document.getElementById("zb").value;
+               var cx = document.getElementById("cx").value;
+               var cy = document.getElementById("cy").value;
+               var cz = document.getElementById("cz").value;
+               var A = [ax,ay,az];
+               var B = [bx,by, bz];
+               var C = [cx,cy,cz];
+
+               var AB =vector(A,B);
+               var CA = vector(C,A);
+               var CB = vector(C,B);
+
+               var lenAB = vLen(AB);
+               var lenCA = vLen(CA);
+               var lenCB= vLen(CB);
+               var CAxCB = scalar(CA,CB);
+
+               document.getElementById("ab").innerHTML = "AB: " + AB[0] + "," + AB[1]  + ","+ AB[2];
+               document.getElementById("ca").innerHTML = "CA: " + CA[0] + "," + CA[1]  + ","+ CA[2];
+               document.getElementById("cb").innerHTML = "CB: " + CB[0] + "," + CB[1]  + ","+ CB[2];
+               document.getElementById("lenab").innerHTML = "|AB| = " + lenAB;
+               document,getElementById("lenca").innerHTML = "|CA| = " + lenCA;
+               document.getElementById("lencb") = "|CB| = " + lenCB;
+               document.getElementById("scalar") =  "CA x CB = "  + CAxCB;            
+
+
+           }
+      
+        </script>
+        
+    </head>
+    <body>
+        <p> Въведете координатите на вектора <b>A </b>: 
+            <input type= "text" id = "xa" value="" width = "5"> 
+            <input type= "text" id = "ya" value="" width = "5"> 
+            <input type= "text" id = "za" value="" width = "5"> 
+            </p>
+            <p>
+                Въведете координатите на вектора <b>B</b>:
+                <input type= "text" id = "xb" value="" width = "5"> 
+                <input type= "text" id = "yb" value="" width = "5"> 
+                <input type= "text" id = "zb" value="" width = "5"> 
+            </p>
+            <p>
+                Въведете координатите на вектора <b>C</b>:
+                <input type= "text" id = "xc" value="" width = "5"> 
+                <input type= "text" id = "yc" value="" width = "5"> 
+                <input type= "text" id = "zc" value="" width = "5"> 
+            </p>
+            <button onclick ="calc()" > Изчисли</button>
+            <p id = "ab"></p>
+            <p id= "ca"></p>
+            <p id="cb"></p>
+            <p id="lenab"></p>
+            <p id="lenca"></p>
+            <p id="lencb"></p>
+            <p id = "scalar"></p>        
+         </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="suica.min.js"></script>
+        <script>
+            function main(n,x,y,z)
+            {
+                new Suica();
+                oxyz();
+                demo();
+
+                        
+                 var s = segment([x,y,z], [x+n,y,z]);
+                 var r =ray([x,y,z], [x, y+n,z]); 
+                 var l = line([x,y,z], [x,y,z+n]);
+          
+
+			
+
+            }
+        </script>
+    </head>
+    <body onload="main(15,8,5,8)">
+        <canvas width="800" height="400" style = "border: solid 3px blue;"></canvas>
+
+        
+    </body>
+</html>

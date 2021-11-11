@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="suica.min.js"></script>
+        <script>
+            function main(n,r,x,y,z)
+            {
+                new Suica();
+                oxyz();
+                demo();
+
+			for (var i=0; i<n; i++)
+			{
+				var alpha = radians(360) / n * i;
+				
+				var x1 = x + r*Math.cos(alpha);
+				var y1 =  y + r*Math.sin(alpha);
+                var z1 = z;
+				
+				var p =point([x1,y1,z1]);
+                p.pointSize = 5;
+                if(i < n/2)
+                {
+                    p.color = [1,0,0];
+                }
+                else
+                {
+                    p.color = [0,0,0];
+                }
+			}
+
+            }
+        </script>
+    </head>
+    <body onload="main(100,20,10,20,10 )">
+
+        <canvas width="800" height="400" style = "border: solid 3px blue;"></canvas>
+
+        
+    </body>
+</html>

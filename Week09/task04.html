@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "suica.min.js"></script>
+        <script>
+        function vLen(a)
+           {
+               return Math.sqrt(a[0] * a[0] + a[1]*a[1] + a[2]*a[2]);
+           }
+           function vector(point1, point2)
+           {
+               return [point2[0] - point1[0], point2[1] - point1[1], point2 [2] - point1[2]];
+           }
+
+           function scalar(vector1, vector2)
+           {
+               return (vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2]);
+           }
+           function main()
+           {
+               var A = [3,-5,1];
+               var B = [-2,4,7];
+               var C = [6,-4,0];
+
+               var AB =vector(A,B);
+               var CA = vector(C,A);
+               var CB = vector(C,B);
+
+               var lenAB = vLen(AB);
+               var lenCA = vLen(CA);
+               var lenCB= vLen(CB);
+
+               var CAxCB = scalar(CA,CB);
+               console.log("AB: " + AB[0] + "," + AB[1]  + ","+ AB[2]);
+               console.log("CA: " + CA[0] +  "," + CA[1] + ","  +CA[2]);
+               console.log("CB: " + CB[0] +  "," + CB[1] + ","  +CB[2]);
+               console.log("|AB| = " + lenAB);
+               console.log("|CA| = " + lenCA);
+               console.log("|CB| = " + lenCB);
+               console.log("CA x CB = "  + CAxCB);
+
+
+
+           }
+      
+        </script>
+        
+    </head>
+    <body onload= "main()">
+         </body>
+</html>

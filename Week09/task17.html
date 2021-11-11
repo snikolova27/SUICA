@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="suica.min.js"></script>
+        <script>
+            function main(n,r,x,y,z)
+            {
+                new Suica();
+                oxyz();
+                demo();
+
+            var O1 = point([random(-20,20),random(-20,20),random(-20,20)]);
+			var O2 = point([O1.center[0],O1.center[1],random(-20,20)]);
+			
+			for (var i=0; i<n; i++)
+			{
+				var a = random(0,radians(360));
+							
+				var xp = O1.center[0] + r*Math.cos(a);
+				var yp = O1.center[1] + r*Math.sin(a);
+				var zp = O1.center[2];
+				
+				var xq = O2.center[0] + r*Math.cos(a);
+				var yq = O2.center[1] + r*Math.sin(a);
+				var zq = O2.center[2];
+				
+				segment([xp,yp,zp], [xq,yq,zq]);
+				
+			}
+          
+            }
+        </script>
+    </head>
+    <body onload="main(40,20,3,5,6)">
+        <canvas width="800" height="400" style = "border: solid 3px blue;"></canvas>
+
+        
+    </body>
+</html>
