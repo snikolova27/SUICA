@@ -1,0 +1,75 @@
+
+body
+{
+	width: 1000px;
+	margin: auto;
+	
+	background-color: #fad7f3;
+	text-align: center;
+	font-family: Comfortaa;
+	color: Indigo;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+h1
+{
+	font-size: 4em;
+	margin-bottom: 0;
+	text-shadow: 0 0 5px whitesmoke;
+    border-bottom: 4px dotted whitesmoke;
+}
+
+h2
+{
+    font-size : 2em;
+	margin-top: 2em;
+    border-bottom: 1px dashed whitesmoke;
+	text-align: left;
+	margin-bottom: 0;
+	text-shadow: 0 0 1px whitesmoke;
+}
+h3
+{
+    font-size : 1.4em;
+    margin-top: 1.5em;
+	text-align: left;
+	margin-bottom: 0;
+	text-shadow: 0 0 1px whitesmoke;
+}
+
+h4 
+{
+    text-align: center;
+}
+
+p
+{
+    margin-top: 0.5em;
+	text-align: justify;
+	font-size: 1.1em;
+}
+
+
+[formula]
+{
+	text-align: left;
+	font-size: 150%;
+}
+[belowFormula]
+{
+    text-align: left;
+	font-size: 120%;
+}
+
+img
+{
+    /*display: block;*/
+	/* margin: auto; */
+	border: solid 1px whitesmoke;
+	box-shadow: 0 0 5px 0px whitesmoke;
+}
