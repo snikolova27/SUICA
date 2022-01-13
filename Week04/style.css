@@ -1,0 +1,120 @@
+.image1{
+    width:10%;
+    height: 10%;
+  margin-left:45%;
+  margin-right:45%;
+
+}
+
+.image2
+{
+    width:10%;
+    height:20%;
+    margin-left:45%;
+    margin-right:45%;
+  
+}
+
+.theorem1
+{
+    border-left:20px solid rgba(135,206,235,1.0);
+    border-right:20px solid rgba(135,206,235,1.0);
+    background-color:#FFFBF5;
+    margin-left: 20%;
+    margin-right:20%;
+    color:#42B0D1;
+    font-family: 'Times New Roman', Times, serif;
+    font-style:italic;
+    text-align:center;
+
+}
+
+
+
+body{
+   background-color: #AD9C84;
+}
+li
+{
+    background-color:rgba(135,206,235,1.0);
+}
+
+h1
+{
+    padding-top:60px;
+    color:#3690AB;
+    text-align:center;
+    font-family: Arial;
+    text-transform:uppercase;
+    font-size:250%;
+    font-weight: bold;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #3690AB;
+    border-spacing: 10px;
+}
+#formula
+{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size:180%;
+    font-weight: bold;
+
+}
+
+#figura
+{
+    font-style:italic;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 80%;
+    text-align: center;
+}
+
+ul li{
+    display: inline;
+    padding: 10px;
+    margin: 20px;
+    margin-top: 30px;
+  
+    
+}
+ul{
+    text-align: center;
+    padding-top:20px;
+    padding-left: 20px;
+   
+
+}
+a:link{
+    text-decoration: none;
+    color:#AD9C84
+}
+
+a:hover{
+    color: #FFFFFF;
+    background-color: #AD9C84;
+}
+a:visited{
+    color: #3690AB;
+}
+p{
+    margin-left:5%;
+    margin-right:5%;
+}
+
+.framing
+{
+    width: 80%;
+    background-color: antiquewhite;
+    color:#1A4551;
+    text-align: justify;
+    font-family: Arial;
+    font-size:120%;
+    margin-left:10%;
+    margin-right:10%;
+    padding-bottom: 5%;
+
+}
+
+

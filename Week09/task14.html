@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="suica.min.js"></script>
+        <script>
+            function main(n,m)
+            {
+                new Suica();
+                oxyz();
+                demo();
+
+                var A =point([random(-15,15),random(-15,15),random(-15,15)]);
+                A.pointSize=  6;
+                A.color = [1,0,0];
+                				
+                var x = A.center[0];
+                var y = A.center[1];
+                var z = A.center[2];
+
+                var B = point([x+n,y,z]);
+                B.pointSize = 10;
+                B.color = [1,0,0];
+
+                var C = point([x, y+m,z]);
+                C.pointSize = 10;
+                C.color = [1,0,0];
+
+                var D = point([x+n,y+m,z]);
+                D.pointSize = 10;
+                D.color = [1,0,0];
+                
+                //sides
+                var AB = segment([x,y,z], [x+n,y,z]);
+                AB.color = [0,0,1];
+                var BC = segment([x+n,y,z], [x+n, y+m,z]);
+                BC.color = [0,0,1];
+                var DA = segment([x+n,y+m,z], [x,y,z]);
+                DA.color = [0,0,1];
+                var CD= segment([x,y+m,z], [x+n, y+m,z]);
+                CD.color = [0,0,1];
+
+                //diagonals
+                var AC = segment([x,y,z], [x,y+m,z]);
+                AC.color = [0,0,1];
+                var BD = segment([x+n,y,z], [x, y+m,z]);
+                BD.color = [0,0,1];
+      
+          
+            }
+        </script>
+    </head>
+    <body onload="main(15,10)">
+        <canvas width="800" height="400" style = "border: solid 3px blue;"></canvas>
+
+        
+    </body>
+</html>

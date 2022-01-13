@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="suica.min.js"></script>
+
+	<script>
+		function main(x,y,z,a)
+		{
+			new Suica();
+			oxyz();
+			demo();
+			
+                s = cube([x,y,z],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+                s= cube([x+a,y,z],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+                s = cube([x+2*a, y,z],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+                s= cube([x + 0.5*a, y,z +a],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+                s= cube([x + 1.5*a, y , z +a],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+                s= cube([x + a, y ,z +2*a],a);
+                s.mode = Suica.SOLID;
+                s.focus = [1,0,0];
+                s.color = [Math.random(),Math.random(),Math.random()];
+
+
+
+              
+		}
+	</script>	
+</head>
+
+<body onload="main(10,10,0,10)">
+	<noscript>
+		Искаме JavaScript, но няма!
+	</noscript>
+	
+	<canvas width="900" height="600" style="border: solid 1px Black;">
+		Искаме canvas, но няма!
+	</canvas>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "suica.min.js"></script>
+        <script>
+                 function vLen(a)
+           {
+               return Math.sqrt(a[0] * a[0] + a[1]*a[1] + a[2]*a[2]);
+           }
+           function calc()
+           {
+               var xp,yp,zp,xq,yq,zq;
+               xp = document.getElementById('xp').value;
+               yp = document.getElementById('yp').value;
+               zp = document.getElementById('zp').value;
+               xq = document.getElementById('xq').value;
+               yq = document.getElementById('yq').value;
+               zq = document.getElementById('zq').value;
+                var p = [xp,yp,zp];
+                var q = [xq,yq,zq];
+                var sum = vLen(p) + vLen(q);
+                var diff = vLen(p) - vLen(q);
+                document.getElementById("resultsum").innerHTML =  "|p| + |q| = " +sum;
+                document.getElementById("resultdiff").innerHTML = "|p| - |q| = " +diff;
+
+           }
+      
+        </script>
+        
+    </head>
+    <body >
+        <p> Въведете координатите на вектора <b>Р </b>: 
+        <input type= "text" id = "xp" value="" width = "5"> 
+        <input type= "text" id = "yp" value="" width = "5"> 
+        <input type= "text" id = "zp" value="" width = "5"> 
+        </p>
+        <p>
+            Въведете координатите на вектора <b>Q</b>:
+            <input type= "text" id = "xq" value="" width = "5"> 
+            <input type= "text" id = "yq" value="" width = "5"> 
+            <input type= "text" id = "zq" value="" width = "5"> 
+        </p>
+        <button onclick ="calc()" > Изчисли</button>
+
+        <p id="resultsum"></p>
+        <p id="resultdiff"></p>
+    </body>
+</html>

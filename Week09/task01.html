@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "suica.min.js"></script>
+        <script>
+                 function vLen(a)
+           {
+               return Math.sqrt(a[0] * a[0] + a[1]*a[1] + a[2]*a[2]);
+           }
+           function main()
+           {
+                var p = [12,18,-1];
+                var q = [5,3,1];
+                var sum = vLen(p) + vLen(q);
+                var diff = vLen(p) - vLen(q);
+                console.log ("|p| + |q| = " +sum);
+                console.log("|p| - |q| = " +diff);
+           }
+      
+        </script>
+        
+    </head>
+    <body onload="main()">
+    </body>
+</html>

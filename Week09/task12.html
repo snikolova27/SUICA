@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="suica.min.js"></script>
+        <script>
+            function main()
+            {
+                new Suica();
+                oxyz();
+                demo();
+
+                var A = point([random(-15,15),random(-15,15),random(-15,15)]);
+                A.pointSize = 10;
+                A.color = [0,0,1];
+
+                var B = point([random(-15,15),random(-15,15),random(-15,15)]);
+                B.pointSize = 10;
+                B.color = [0,0,1];
+			
+            
+                  var k = 1/2;
+                  var x = A.center[0] * (1-k) + k * B.center[0]; 
+                  var y = A.center[1] * (1-k) + k * B.center[1]; 
+                  var z = A.center[2] * (1-k) + k * B.center[2]; 
+
+                  var p= point([x,y,z]);
+                  p.color = [1,0,0];
+                  p.pointSize = 10;
+          
+
+			
+
+            }
+        </script>
+    </head>
+    <body onload="main()">
+
+        <canvas width="800" height="400" style = "border: solid 3px blue;"></canvas>
+
+        
+    </body>
+</html>
