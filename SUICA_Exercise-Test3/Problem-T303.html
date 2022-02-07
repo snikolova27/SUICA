@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 3</title>
+		<script src="suica.min.js"></script>
+		
+		<script>
+			function main()
+			{
+				p=new Suica();
+						
+				/*построяваме куб с център началото на координатната система и дължина на страната 20 и визуализираме само контурите му*/
+				c=cube([0,0,0],20).custom({mode: Suica.LINE});
+				/*построяваме един от диагоналите на куба*/
+				l=segment([c.size/2,-c.size/2,-c.size/2],[-c.size/2,c.size/2,c.size/2]);
+				/*в един от върховете на куба построяваме сфера*/			
+				s=sphere([c.size/2,-c.size/2,-c.size/2],2).custom({color: [1,0,0]});
+				
+				p.nextFrame=loop;
+							
+			}
+			
+			function loop(){
+				/*в променливите A и B съхраняваме координатите на двата върха на куба, които са краища на диагонала, който построихме*/
+				A=[c.size/2,-c.size/2,-c.size/2];
+				B=[-c.size/2,c.size/2,c.size/2];
+				
+				t = Suica.time;
+				k =0.5+0.5*Math.sin(2*t);
+				/*генерираме непрекъснато движение на сферата между вадта върха на куба, като линейна комбинация с коефициент к зависещ от sin и Suica.time*/
+				for (var i=0;i<3;i++){
+				s.center[i]=A[i]*(1-k)+k*B[i];
+				}
+			}
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>

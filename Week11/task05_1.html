@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="suica.min.js"></script>
+
+	<script>
+		function main(x,y,z,r,n)
+		{
+			new Suica();
+			oxyz();
+			//demo();
+
+            for(var i =0; i<n;i++)
+            {
+            a = circle([x, y,z], r);
+            a.mode = Suica.LINE;
+            a.focus = [1,0,0];
+            r = r* 0.95;
+
+            }
+
+		}
+	</script>	
+</head>
+
+<body onload="main(0,-2,5,8,20)">
+	<noscript>
+		Искаме JavaScript, но няма!
+	</noscript>
+	
+	<canvas width="1000" height="450" style="border: solid 1px Black;">
+		Искаме canvas, но няма!
+	</canvas>
+</body>
+</html>

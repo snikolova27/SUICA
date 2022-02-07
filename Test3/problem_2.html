@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="suica.min.js"></script>
+</head>
+
+<body>
+<body>
+	<span id="n2" style="position:fixed; padding: 0.25em;"></span>
+	<canvas id="2" width="616" height="300" style="border: solid 1px black;"></canvas>
+
+	<script>
+
+		// подменете числото 90001 с вашия ф.н.
+		sc = new Suica( 82213 );
+		a=radians(random(0,360));
+		R=3.5;
+		s1=sphere([0,-18.5,0],R).custom({color: [1,1,1]})
+		k = radians(5);
+		sc.nextFrame = loop;
+
+		function loop ()
+		{
+			s1.center = [0 + 3* Math.cos(a), -18.5, 0 + 3* Math.sin(a) ];
+			a+=k;
+		}
+	</script>	
+</body>

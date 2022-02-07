@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 1</title>
+		<script src="suica.min.js"></script>
+		
+		<script>
+			function main()
+			{
+				p=new Suica();
+				
+				/*създаваме цилиндър със случаен център*/
+				c=cylinder([random(-10,10),random(-10,10),random(-10,10)],10,15);
+				
+				r=c.radius-2.1; /*r - радиуса на окръжността върху, която ще лежи ценътра на сферата s, която ще създадем*/
+				a=radians(random(0,360)); /*a - случаен ъгъл*/
+				
+				/*създаваме сфера, която лежи в горната основа на цилиндъра, от вътрешната страна на ръба без да го допира, като потъва наполовина в горната основа*/
+				s=sphere([c.center[0]+r*Math.cos(a), c.center[1]+r*Math.sin(a), c.center[2]+c.height],2).custom({color: [1,1,1]});
+				
+				k=radians(1.5);
+				
+				p.nextFrame=loop;
+							
+			}
+			
+			function loop(){
+				/*генерираме движение на сферата, от вътрешната страна на ръба на цилиндъра*/
+				s.center=[c.center[0]+r*Math.cos(a), c.center[1]+r*Math.sin(a), c.center[2]+c.height];
+				/*на всяка стъпка увеличаваме стойността на ъгъла a с к радиана, което води до промяна на позицията на сферата*/
+				a+=k;
+			}
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>
