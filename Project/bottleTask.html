@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src ="suica.min.js "> </script>
+        <script>
+        
+		function main()
+		{
+			new Suica();
+            background([0.9, 0.68, 0.90]); 
+
+			a = cone([0,0,0],7.5,12.5).custom ({
+                clipPlanes: [[0,0,-1,6/10]]
+            });
+            a.mode = Suica.LINE;
+        
+            cylinder1 = cylinder([0,0,-12.5], 7.5, 12.5);
+            cylinder1.mode = Suica.LINE;
+            cylinder2 = cylinder([0,0,7.2], 3,4);
+            cylinder2.mode = Suica.LINE;
+                
+		}
+	
+        </script>
+        
+    </head>
+    <body onload = "main()">
+	<canvas width="1000" height="500" style="border: solid 1px Black;" id="suica_canvas">
+    </canvas>
+
+    </body>
+</html>
