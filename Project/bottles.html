@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html>
-=======
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
 <head>
 	<meta charset="utf-8">
 	<title> Бутилки и вази </title>
 
     <!--  СУИКА и стилове -->
     <script src="suica.min.js"></script>
-<<<<<<< HEAD
 
     <script>
         SCALE = 50;			// размер на клетка от мрежата (в пиксели)
@@ -17,7 +13,6 @@
 		gentle = 1;			// прецизно влачене на върховете
 		pow = Math.pow;
 
-        // основна функция, инициализира проекта и създава графичните обекти
 		function main()
 		{
 			// създаване на рисувателно поле с даден цвят, проекция и гледна точка
@@ -26,70 +21,301 @@
 			orthographic(-10000,10000);
 			lookAt([0,0,100],[0,0,0],[0,1,0]);
 			
-			// създаване на слушатели на събития от мишката
-			// изпозлват се за реализация на влаченето на върхове
+			// слушатели на събития от мишката
 			p.gl.canvas.addEventListener('mousedown',mouseDown,false);
 			p.gl.canvas.addEventListener('mouseup',mouseUp,false);
 			p.gl.canvas.addEventListener('mouseleave',mouseUp,false);
 			p.gl.canvas.addEventListener('mousemove',mouseMove,false);
 			
 			// стилове, използвани за графичните обекти
-			pStyle = {color:[0.7,0.6,0.8], interactive:true};
-			sStyle = {color:[0.6,0.4,0.5]};
-			gStyle = {color:[1,0.85,1]};
-			qStyle = {color:[0.5,0.6,1],origin:[-0.5,-0.5,0],mode:Suica.LINE};
-			lStyle = {color:[0.9,0.8,1]};
+			points = {color:[0.9, 0.68, 0.90], interactive:true};
+			sides = {color:[0.6,0.4,0.5]};
+			gridStyle = {color:[0.9,0.7,0.8]};
+		    lines = {color:[0.9,0.8,1]};
 			
 			// създаване на три върха като сфери
-			A = sphere([-100,-30,0],7).custom(pStyle);
-			B = sphere([100,0,0],7).custom(pStyle);
-			C = sphere([-30,60,0],7).custom(pStyle);
+			A = sphere([-100,-30,0],7).custom(points);
+			B = sphere([100,0,0],7).custom(points);
+			C = sphere([-30,60,0],7).custom(points);
+            R = sphere([-40,60,0],7).custom(points);
 			
 			// създаване на три страни като цилиндри
-			AB = cylinder(A.center,2,0).custom(sStyle);
-			BC = cylinder(B.center,2,0).custom(sStyle);
-			CA = cylinder(C.center,2,0).custom(sStyle);
-			
-			// създаване на три квадрата
-			ABu = square(A.center,0).custom(qStyle);
-			BCu = square(B.center,0).custom(qStyle);
-			CAu = square(C.center,0).custom(qStyle);
-			
+			AB = cylinder(A.center,2,0).custom(sides);
+			BC = cylinder(B.center,2,0).custom(sides);
+			CA = cylinder(C.center,2,0).custom(sides);
+            RC = cylinder(R.center,2,0).custom(sides);
+					
 			// създаване на линии за продълженията на страните
-			ABl = line(A.center,B.center).custom(lStyle);
-			BCl = line(B.center,C.center).custom(lStyle);
-			CAl = line(C.center,A.center).custom(lStyle);
-			
+			ABl = line(A.center,B.center).custom(lines);
+			BCl = line(B.center,C.center).custom(lines);
+			CAl = line(C.center,A.center).custom(lines);
+            RCl = line(R.center, C.center).custom(lines);
+
+            cylinder; 
+            cone;
 			// позициониране и ориентиране на обектите спрямо
 			// текушите координати на върховете; показване на
-			// изчислени стойности на дължини, лица и ъгли
+			// изчислени стойности на дължини
 			adjustSides();
-
+                   
 			// създаване на мрежата като групов обект
 			grid = group([]);
-			for (var i=-300; i<=300; i+=50)
-				grid.add(segment([i,-200,-1],[i,200,-1]).custom(gStyle));
-			for (var i=-200; i<=200; i+=50)
-				grid.add(segment([-300,i,-1],[300,i,-1]).custom(gStyle));
+			for (var i=-400; i<=400; i+=50)
+				grid.add(segment([i,-250,-1],[i,250,-1]).custom(gridStyle));
+			for (var i=-200; i<=250; i+=50)
+				grid.add(segment([-400,i,-1],[400,i,-1]).custom(gridStyle));
 
-			// автоматично включване на три от опциите,
-			// останалите остават изключени
-			document.getElementById('cbLines').checked = true;
-			document.getElementById('cbSquares').checked = true;
-			document.getElementById('cbGrid').checked = true;
+			document.getElementById('Sides').checked = true;
+			document.getElementById('Grid').checked = true;
 		}
+        // разстояние между две точки
+        function distance(a,b)
+        {
+            var v = vectorPoints(a.center,b.center);
+            return Math.sqrt(scalarProduct(v,v));
+        }
+
+        // обем на цилиндър
+        function volumeC(r,h)
+        {
+            return  Math.PI * r*r*h;
+        }
+		
+        // обем на пресечен конус
+        function volumeCone(r1,r2,h)
+        {
+            return (Math.PI *h / 3) * (r1*r1 + r2*r2 + r2*r1);
+        }
+		
+		// помощна функция, което актуализира интерактивното
+		// поле след промяна на някой от върховете
+		function adjustSides()
+		{
+            if(cylinder.visible)
+            {
+               cylinder.visible = false;
+               cylinder = new Suica.Cylinder(A.center, 0, 0);
+            } 
+
+            if(cone.visible)
+            {
+                cone.visible = false;
+                cone = new Suica.Cone(A.center, 0,0);
+            }
+                  
+			// дължина и ориентация на OA
+			AB.height = distance(A,B);
+			AB.focus = vectorPoints(B.center,A.center);
+			document.getElementById('oa').innerHTML = (AB.height/SCALE).toFixed(2);
+            distAb =AB.height;
+           
+			// дължина и ориентация на AH
+			BC.height = distance(B,C);
+			BC.focus = vectorPoints(C.center,B.center);
+			document.getElementById('oh').innerHTML = (BC.height/SCALE).toFixed(2);
+            distBc = BC.height;
+
+			// дължина и ориентация на HO
+			CA.height = distance(C,A);
+			CA.focus = vectorPoints(A.center,C.center);
+			document.getElementById('ca').innerHTML = (CA.height/SCALE).toFixed(2);
+
+            //обем на цилиндъра  
+            document.getElementById("vC").innerHTML = volumeC((AB.height/SCALE).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
+            
+            RC.height = distance(R,C);
+            RC.focus = vectorPoints(C.center, R.center);
+            document.getElementById("rc").innerHTML = (RC.height/SCALE).toFixed(2);
+
+            // обем на пресечения конус
+            document.getElementById("vCone").innerHTML = volumeCone((AB.height/SCALE).toFixed(2), (RC.height/SCALE).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
+
+		    
+        
+			// позициониране на името на връх A
+			var e = document.getElementById('o');
+			var pos = A.getPosition();
+			e.style.left = pos[0]-5+"px";
+			e.style.top = pos[1]+10+"px";
+			
+			// позициониране на името на връх B
+			var e = document.getElementById('a');
+			var pos = B.getPosition();
+			e.style.left = pos[0]-5+"px";
+			e.style.top = pos[1]+10+"px";
+			
+			// позициониране на името на връх C
+			var e = document.getElementById('h');
+			var pos = C.getPosition();
+			e.style.left = pos[0]-5+"px";
+			e.style.top = pos[1]-40+"px";
+
+            var e =document.getElementById('b');
+            var pos = R.getPosition();
+			e.style.left = pos[0]-5+"px";
+			e.style.top = pos[1]+10+"px";
+
+		}
+		
+		
+		var obj; // връх, който в момента се влачи
+		
+		
+		// обработване на натискане на бутон - запомняме кой е върха
+		function mouseDown(event)
+		{
+			x = event.clientX;
+			y = event.clientY;
+			obj = p.objectAtPoint(x,y);            
+		}
+		
+		
+		// обработване на пускане на бутон - ако е включено
+		// автоматичното подравняване, донагласяваме координатите
+		// на влачения връх и актуализираме чертежа
+		function mouseUp(event)
+		{
+			if (obj)
+			{
+				if (autoInt)
+				{
+					obj.center[0] = SCALE/2*Math.round(obj.center[0]/SCALE*2);
+					obj.center[1] = SCALE/2*Math.round(obj.center[1]/SCALE*2);
+				}
+				adjustSides();
+			}
+			obj = undefined;           
+		}
+		
+		
+		// обработване на влачене на връх,актуализиция на иконката на
+		// курсора според това дали се влачи връх или дали
+		// курсорът е над връх
+		function mouseMove(event)
+		{
+			if (obj)
+			{
+				obj.center[0] += (event.clientX-x)/gentle;
+				obj.center[1] -= (event.clientY-y)/gentle;
+				obj.center[0] = Math.max(obj.center[0],-380)
+				obj.center[0] = Math.min(obj.center[0],+380)
+				obj.center[1] = Math.max(obj.center[1],-180)
+				obj.center[1] = Math.min(obj.center[1],+180)
+				adjustSides();
+			}
+			x = event.clientX;
+			y = event.clientY;
+		
+			if( navigator.systemLanguage )
+			{} else
+			{
+				if (obj || p.objectAtPoint(x,y))
+					p.gl.canvas.style.cursor = 'all-scroll';
+				else
+					p.gl.canvas.style.cursor = 'auto';
+			}
+		}
+
+		
+		// превключване на видимостта на линиите-продължения
+		// на страните на триъгълника
+		function togglesides()
+		{
+			ABl.visible = !ABl.visible;
+			BCl.visible = !BCl.visible;
+			CAl.visible = !CAl.visible;
+            RCl.visible = !RCl.visible;
+		}
+				
+		// превключване на видимостта на мрежата от линии
+		function toggleGrid()
+		{
+			grid.visible = !grid.visible;
+		}
+		
+		
+		//  автоматично подравняване,
+		// ако режимът е включен сега, веднага се подравняват
+		// и трите върха, след което се актуализира чертежа
+		function toggleAutoInt()
+		{
+			autoInt = !autoInt;
+			if (autoInt)
+			{
+				A.center[0] = SCALE/2*Math.round(A.center[0]/SCALE*2);
+				A.center[1] = SCALE/2*Math.round(A.center[1]/SCALE*2);
+				B.center[0] = SCALE/2*Math.round(B.center[0]/SCALE*2);
+				B.center[1] = SCALE/2*Math.round(B.center[1]/SCALE*2);
+				C.center[0] = SCALE/2*Math.round(C.center[0]/SCALE*2);
+				C.center[1] = SCALE/2*Math.round(C.center[1]/SCALE*2);
+                R.center[0] = SCALE/2*Math.round(R.center[0]/SCALE*2);
+				R.center[1] = SCALE/2*Math.round(R.center[1]/SCALE*2);
+
+			}
+			adjustSides();
+		}
+		
+		// прецизност
+		function toggleGentle()
+		{
+			gentle = 11-gentle;
+		}
+
+        // показване на цилиндъра
+        function toggleCylinder()
+        {
+            cylinder.visible = !cylinder.visible;      
+            if(cylinder.visible)
+            {
+                c =  new Suica.Cylinder(A.center,AB.height/2,BC.height/2);
+                c.focus= [0,1,1];   
+                c.visible = true;  
+                c.color =[0.28,0,0.35]
+                cylinder = c;    
+            } 
+           
+           // скриваме цилиндъра
+            else
+            {
+                cylinder = new Suica.Cylinder(A.center,0,0);
+                cylinder.visible = false;
+            }
+
+        }
+
+        // показване на конуса
+        function toggleCone()
+        {
+            cone.visible = !cone.visible;
+            if(cone.visible)
+            {
+                c =  new Suica.Cone(A.center,AB.height/2,BC.height).custom ({
+                clipPlanes: [[0,0,-1, 3/5]]
+            });;
+                c.focus= [0,1,0];   
+                c.visible = true;  
+                c.color =[0.28,0,0.35]
+                cone = c;    
+            } 
+            //скриваме конуса
+            else
+            {
+                cone = new Suica.Cone(A.center,0,0);
+                cone.visible = false;
+            }
+
+        }
+
     </script>
-=======
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
 	<link rel="stylesheet" type="text/css" href="bottles.css">
+
     <!-- шрифт Comfortaa-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
-<<<<<<< HEAD
 </head>
 
-<body оnload ="main()"> 
+<body onload="main()"> 
     <h1 id ="home">Бутилки и вази</h1>
 	<h3>Урок за обем на цилиндър и пресечен конус | Соня Николова, 82213 | 2022</h3>
     <div class = "navigation">
@@ -105,25 +331,10 @@
     <img src = "cylinder2.png" height = 35% width = 35% class = "img1">
     <h3> Цилиндър </h3>
     
-=======
-
-
-</head>
-
-<body> 
-    <h1>Бутилки и вази</h1>
-	<h3>Урок за обем на цилиндър и пресечен конус | Соня Николова, 82213 | 2022</h3>
-
-    <h2>1. Увод</h2>
-
-    <h3> Цилиндър </h3>
-    <img src = "cylinder-1.png" height = 20% width = 20% style ="margin-top = 50px margin-left = 20%"">
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
     <p> В геометрията <b> цилиндърът </b> се дефинира като геометрично тяло, заградено от цилиндрична повърхнина и две равнинни сечения. Той няма върхове.
          Цилиндърът е геометрично тяло, което е ограничено от две успоредни основи и околна повърхнина.
         Околната повърхнина е перпендикулярна на основата и основата представлява окръжност.</p>
 
-<<<<<<< HEAD
     <h3> Пресечен конус </h3>
     <img src ="cones.png" class = "img2"  height = 35% width = 35% > 
     <p style="margin-bottom : 10%; margin-top:8%;margin-right: 10%;">Тяло, което е част кръгов конус К, заключена между основата на конуса и едно негово успоредно сечение, 
@@ -132,27 +343,14 @@
 
     <h2 id = "urok"> 2. Урок </h2>
     <div class ="lesson1">
-=======
-
-
-    <h3> Пресечен конус </h3>
-    <p>Тяло, което е част кръгов конус К, заключена между основата на конуса и едно негово успоредно сечение, се нарича <b> пресечен конус </b>.</p>
-
-    <h3> снимка на пресечен конус </h3>
-
-    <h2> 2. Урок </h2>
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
     <h3> Обем на цилиндър </h3>
     <p formula> V = πr²h </p>
     <p belowFormula> Където V - обем на цилиндъра</p>
     <p belowFormula> π - числото пи</p>
     <p belowFormula> r - радиус на основата на цилиндъра</p>
     <p belowFormula> h - височината на цилиндъра</p>
-<<<<<<< HEAD
 </div>
 <div class ="lesson2">
-=======
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
 
     <h3> Обем на пресечен конус </h3>
     <p formula> V = (πh / 3)(r² + r₁² + rr₁) </p>
@@ -162,7 +360,6 @@
     <p belowFormula> r₁ - радиус на долната основа на пресечения конус </p>
     <p belowFormula> h - височината на пресечения конус</p>
 
-<<<<<<< HEAD
 </div>
 
 <h2 id = "tasks" style="padding-top :25%">Задачи</h2>
@@ -195,29 +392,45 @@
 <img src ="bottlesTask.png" class ="img1" height = 50% width = 50%>
 
 <p style = "margin-bottom: 9%"> Имате следната бутилка (на снимката вдясно). Радиусът на дъното е 2.5 см, а на върха е 1.5 см, височината е 20 см.
-    Знаейки, че пресеченият конус започва от височина 13 см, намерете колко вода събира тази бутилка.
+    Знаейки, че пресеченият конус започва от височина 13 см и е висок 4 см, намерете колко вода събира тази бутилка.
   
 </p>
 
 <h3 id = "interactive" margin-top = 5%>Интерактивно поле</h3>
+<p>В това поле можете да зададете диаметър на основата(d) и височина(h) на цилиндър и автоматично ще бъде пресметнат неговия обем. Ако преместите някоя от точките след като цилиндърът е бил показан, той ще се скрие.</p>
+<p>Също така може да използвате полето, за да построите пресечен конус като диаметър на горната основа е отново d, а на долната d₁.  </p>
+<p>Забележка: Избрано е въвеждането на диаметър за по-добра визуализация при високи стойности.</p>
 <!-- опции над полето -->
-<label><input type="checkbox" id="cbLines" onclick="toggleLines()">Линии</label>
-<label><input type="checkbox" id="cbSquares" onclick="toggleSquares()">Квадрати</label>
-<label><input type="checkbox" id="cbGrid" onclick="toggleGrid()">Мрежа</label>
-<label><input type="checkbox" id="cbAutoInt" onclick="toggleAutoInt()">Подравняване</label>
-<label><input type="checkbox" id="cbGentle" onclick="toggleGentle()">Прецизност</label>
-
+	<label><input type="checkbox" id="cbSides" onclick="togglesides()">Линии</label>
+	<label><input type="checkbox" id="Grid" onclick="toggleGrid()">Мрежа</label>
+	<label><input type="checkbox" id="cbAutoInt" onclick="toggleAutoInt()">Подравняване</label>
+	<label><input type="checkbox" id="cbGentle" onclick="toggleGentle()">Прецизност</label>
+    <label><input type ="checkbox" id= "cylinder" onclick = "toggleCylinder()" > Покажи цилиндър </label>
+    <label><input type ="checkbox" id= "cone" onclick = "toggleCone()" > Покажи пресечен конус </label>
+     
+	
 <!-- рисувателно поле -->
-<canvas width="600" height="400">Искаме canvasa
-</canvas>
+
+	<canvas width="800" height="500">
+	</canvas>
+    <h3 class="block">
+		OA (d) =<span class="value" id="oa">0</span>
+        HB (d₁) = <span class = "value" id ="rc">0</span>
+		OH (h) =<span class="value" id="oh">0</span>
+    	HA=<span class="value" id="ca">0</span>
+        V цилиндър = <span class ="value" id = "vC">0</span>
+        <br>
+        V пресечен конус = <span class ="value" id ="vCone"> 0</span>
+		
+	</h3>
+
+<!-- етикети на върховете, показват се над графичното поле -->
+	<div id="o" class="label">O</div>
+	<div id="a" class="label">A</div>
+	<div id="h" class="label">H</div>
+    <div id ="b" class = "label">B</div>
 
 
 
 </body>
 </html>
-=======
-
-    <h4> 2022, Соня Николова </h4>
-
-</body>
->>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
