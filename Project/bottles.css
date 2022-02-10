@@ -19,7 +19,11 @@ body
 h1
 {
 	font-size: 4em;
+<<<<<<< HEAD
 	margin-bottom: 0%;
+=======
+	margin-bottom: 0;
+>>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
 	text-shadow: 0 0 5px whitesmoke;
     border-bottom: 4px dotted whitesmoke;
 }
@@ -27,10 +31,17 @@ h1
 h2
 {
     font-size : 2em;
+<<<<<<< HEAD
 	margin-top: 2%;
     border-bottom: 1px dashed whitesmoke;
 	text-align: left;
 	margin-bottom: 1%;
+=======
+	margin-top: 2em;
+    border-bottom: 1px dashed whitesmoke;
+	text-align: left;
+	margin-bottom: 0;
+>>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
 	text-shadow: 0 0 1px whitesmoke;
 }
 h3
@@ -49,8 +60,11 @@ h4
 
 p
 {
+<<<<<<< HEAD
 	margin-left:1%;
 	margin-right: 1%;
+=======
+>>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
     margin-top: 0.5em;
 	text-align: justify;
 	font-size: 1.1em;
@@ -68,6 +82,7 @@ p
 	font-size: 120%;
 }
 
+<<<<<<< HEAD
 .img1
 {
 	border: solid 1px whitesmoke;
@@ -132,3 +147,12 @@ ul li
 {
 	text-align:left;
 }
+=======
+img
+{
+    /*display: block;*/
+	/* margin: auto; */
+	border: solid 1px whitesmoke;
+	box-shadow: 0 0 5px 0px whitesmoke;
+}
+>>>>>>> 41c8e56ae21151fb033321a0fa5c670d587b4bb9
