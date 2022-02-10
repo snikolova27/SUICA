@@ -8,6 +8,9 @@
     <script src="suica.min.js"></script>
 
     <script>
+		// Бележка: Използвано е интерактивното поле от примерния проект за Правоъгълен триъгълник, като то е модифицирано,
+		// така че да служи за текущата задача
+		
         SCALE = 50;			// размер на клетка от мрежата (в пиксели)
 		autoInt = false;	// автоматично подравняване на върховете
 		gentle = 1;			// прецизно влачене на върховете
@@ -15,7 +18,6 @@
 
 		function main()
 		{
-			// създаване на рисувателно поле с даден цвят, проекция и гледна точка
 			p = new Suica();
 			background([0xFF/255,0xF0/255,0xF5/255,1]); // цвят LavenderBlush
 			orthographic(-10000,10000);
@@ -33,13 +35,13 @@
 			gridStyle = {color:[0.9,0.7,0.8]};
 		    lines = {color:[0.9,0.8,1]};
 			
-			// създаване на три върха като сфери
+			// създаване на четири върха като сфери
 			A = sphere([-100,-30,0],7).custom(points);
 			B = sphere([100,0,0],7).custom(points);
 			C = sphere([-30,60,0],7).custom(points);
             R = sphere([-40,60,0],7).custom(points);
 			
-			// създаване на три страни като цилиндри
+			// създаване на четири страни като цилиндри
 			AB = cylinder(A.center,2,0).custom(sides);
 			BC = cylinder(B.center,2,0).custom(sides);
 			CA = cylinder(C.center,2,0).custom(sides);
@@ -51,8 +53,9 @@
 			CAl = line(C.center,A.center).custom(lines);
             RCl = line(R.center, C.center).custom(lines);
 
-            cylinder; 
-            cone;
+            cylinder;  // ще се използва за рисуването на цилиндъра
+            cone; 	   // ще се използва за рисуването на пресечения конус
+
 			// позициониране и ориентиране на обектите спрямо
 			// текушите координати на върховете; показване на
 			// изчислени стойности на дължини
@@ -68,6 +71,7 @@
 			document.getElementById('Sides').checked = true;
 			document.getElementById('Grid').checked = true;
 		}
+
         // разстояние между две точки
         function distance(a,b)
         {
@@ -87,8 +91,7 @@
             return (Math.PI *h / 3) * (r1*r1 + r2*r2 + r2*r1);
         }
 		
-		// помощна функция, което актуализира интерактивното
-		// поле след промяна на някой от върховете
+		// ктуализира интерактивното поле след промяна на някой от върховете
 		function adjustSides()
 		{
             if(cylinder.visible)
@@ -121,17 +124,16 @@
 			document.getElementById('ca').innerHTML = (CA.height/SCALE).toFixed(2);
 
             //обем на цилиндъра  
-            document.getElementById("vC").innerHTML = volumeC((AB.height/SCALE).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
+            document.getElementById("vC").innerHTML = volumeC((AB.height/(SCALE*2)).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
             
+			// дължина и ориентация на HB
             RC.height = distance(R,C);
             RC.focus = vectorPoints(C.center, R.center);
             document.getElementById("rc").innerHTML = (RC.height/SCALE).toFixed(2);
 
             // обем на пресечения конус
-            document.getElementById("vCone").innerHTML = volumeCone((AB.height/SCALE).toFixed(2), (RC.height/SCALE).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
+            document.getElementById("vCone").innerHTML = volumeCone((AB.height/(SCALE*2)).toFixed(2), (RC.height/(SCALE*2)).toFixed(2),(BC.height/SCALE).toFixed(2)).toFixed(2);
 
-		    
-        
 			// позициониране на името на връх A
 			var e = document.getElementById('o');
 			var pos = A.getPosition();
@@ -150,6 +152,7 @@
 			e.style.left = pos[0]-5+"px";
 			e.style.top = pos[1]-40+"px";
 
+			// позициониране на името на връх R
             var e =document.getElementById('b');
             var pos = R.getPosition();
 			e.style.left = pos[0]-5+"px";
@@ -267,7 +270,7 @@
             cylinder.visible = !cylinder.visible;      
             if(cylinder.visible)
             {
-                c =  new Suica.Cylinder(A.center,AB.height/2,BC.height/2);
+                c =  new Suica.Cylinder(A.center,AB.height/3,BC.height/3);
                 c.focus= [0,1,1];   
                 c.visible = true;  
                 c.color =[0.28,0,0.35]
@@ -318,6 +321,8 @@
 <body onload="main()"> 
     <h1 id ="home">Бутилки и вази</h1>
 	<h3>Урок за обем на цилиндър и пресечен конус | Соня Николова, 82213 | 2022</h3>
+
+	<!-- меню -->
     <div class = "navigation">
         <a class ="active" href = "#home">Начало</a>
         <a href = "#uvod" >Увод</a>
@@ -326,6 +331,8 @@
         <a href ="#interactive">Интерактивно поле</a>
         <a href ="#solutions" >Решения</a>
     </div>  
+	<!-- увод -->
+
     <h2 id = "uvod">1. Увод</h2>
 
     <img src = "cylinder2.png" height = 35% width = 35% class = "img1">
@@ -340,7 +347,7 @@
     <p style="margin-bottom : 10%; margin-top:8%;margin-right: 10%;">Тяло, което е част кръгов конус К, заключена между основата на конуса и едно негово успоредно сечение, 
         се нарича <b> пресечен конус </b>. На снимката вляво виждаме както пресечен конус, така и обикновен конус.</p>
 
-
+	<!-- урок -->
     <h2 id = "urok"> 2. Урок </h2>
     <div class ="lesson1">
     <h3> Обем на цилиндър </h3>
@@ -361,11 +368,12 @@
     <p belowFormula> h - височината на пресечения конус</p>
 
 </div>
+<!-- задачи -->
 
 <h2 id = "tasks" style="padding-top :25%">Задачи</h2>
 <p>Изполвайки <a href="#interactive">Интерактивното поле</a> долу и дадените формули в <a href="#urok">Урока</a>, решете следните задачи:</p>
 <h3> Задача №1</h3>
-<p>В дадена рецепта е указано да използвате 400 грама брашно. но нямате кантарче. Разполагате само с обикновена чаша. Проверете дали при следните стойности
+<p>В дадена рецепта е указано да използвате 400 грама брашно, но нямате кантарче. Разполагате само с обикновена чаша. Проверете дали при следните стойности
     за нейните размери ще можете да отмерите достатъчно количество брашно.
 </p>
 <ul>
@@ -379,13 +387,13 @@
 </p>
 
 <h3>Задача №3</h3>
-<p>Имате купа и искате да разбере ще можете ли да поберете 250 грама захар в нея. Провете дали ще успеете при следните 
+<p>Имате купа и искате да разбере ще можете ли да поберете 250 грама захар в нея. Проверете дали ще успеете при следните 
     размери на купата:
 </p>
 <ul>
-    <li> <b>r </b> - радиус на горната основа = 5, <b>r₁</b> - радиус на долната основа = 10, <b>h</b> - височина на купата = 6</li>
+    <li> <b>r </b> - радиус на горната основа = 5, <b>r₁</b> - радиус на долната основа = 4.5, <b>h</b> - височина на купата = 6</li>
     <li> <b>r </b> - радиус на горната основа = 1.75, <b>r₁</b> - радиус на долната основа = 2, <b>h</b> - височина на купата = 4</li>
-    <li> <b>r </b> - радиус на горната основа = 9, <b>r₁</b> - радиус на долната основа = 10, <b>h</b> - височина на купата = 7</li>
+    <li> <b>r </b> - радиус на горната основа = 4, <b>r₁</b> - радиус на долната основа = 3, <b>h</b> - височина на купата = 7</li>
 </ul>
 
 <h3>Задача №4</h3>
@@ -396,10 +404,11 @@
   
 </p>
 
-<h3 id = "interactive" margin-top = 5%>Интерактивно поле</h3>
+<h2 id = "interactive" >Интерактивно поле</h2>
 <p>В това поле можете да зададете диаметър на основата(d) и височина(h) на цилиндър и автоматично ще бъде пресметнат неговия обем. Ако преместите някоя от точките след като цилиндърът е бил показан, той ще се скрие.</p>
 <p>Също така може да използвате полето, за да построите пресечен конус като диаметър на горната основа е отново d, а на долната d₁.  </p>
 <p>Забележка: Избрано е въвеждането на диаметър за по-добра визуализация при високи стойности.</p>
+
 <!-- опции над полето -->
 	<label><input type="checkbox" id="cbSides" onclick="togglesides()">Линии</label>
 	<label><input type="checkbox" id="Grid" onclick="toggleGrid()">Мрежа</label>
@@ -407,30 +416,100 @@
 	<label><input type="checkbox" id="cbGentle" onclick="toggleGentle()">Прецизност</label>
     <label><input type ="checkbox" id= "cylinder" onclick = "toggleCylinder()" > Покажи цилиндър </label>
     <label><input type ="checkbox" id= "cone" onclick = "toggleCone()" > Покажи пресечен конус </label>
-     
-	
-<!-- рисувателно поле -->
+     	
+<!-- интерактивно поле -->
 
 	<canvas width="800" height="500">
 	</canvas>
-    <h3 class="block">
+    <h3 class="block" >
 		OA (d) =<span class="value" id="oa">0</span>
         HB (d₁) = <span class = "value" id ="rc">0</span>
 		OH (h) =<span class="value" id="oh">0</span>
     	HA=<span class="value" id="ca">0</span>
-        V цилиндър = <span class ="value" id = "vC">0</span>
-        <br>
+		<br>
+        V цилиндър = <span class ="value" id = "vC">0   </span> 
+		<br>
         V пресечен конус = <span class ="value" id ="vCone"> 0</span>
 		
 	</h3>
 
-<!-- етикети на върховете, показват се над графичното поле -->
+<!-- етикети на върховете-->
 	<div id="o" class="label">O</div>
 	<div id="a" class="label">A</div>
 	<div id="h" class="label">H</div>
     <div id ="b" class = "label">B</div>
 
+	<h2 id ="solutions">Решения</h2>
+	<p> При кликване върху снимка, тя ще се отвори в отделен прозорец.</p>
+	<h3>Задача №1</h3>
+	<p>Създаваме цилиндъра в интерактивното поле и преценяваме дали полученият обем ни удовлетворява.</p>
+	<ul>
+	<li>
+	<a href ="cylTask1.png"  target="_blank"><img style="float:right;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;"  class = "thumbnail" src = "cylTask1.png" >
+	</a>
+	<p style ="margin-bottom :1%; padding-top :5%">Виждаме, че тук обемът на чашата е 785.40 куб. см, тоест трудно ще отмерим с нея необходимото количество.</p>
+	</li>
+	<li>
+	<a href = "cylTask2.png" taget="_blank"><img style="float:right;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="cylTask2.png" class = "thumbnail" ></a>
+	<p style ="margin-bottom :1%; padding-top :12%">Виждаме, че тук обемът на чашата е 157.08 куб. см, тоест e възможно да отмерим с нея необходимото количество.</p>
+	</li>
+	<li>
+	<a href = "cylTask3.png" target = "_blank"> <img  style="float:right; margin-bottom:3%;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="cylTask3.png" class = "thumbnail" ></a>
+	<p style ="margin-bottom :5%; padding-top :10%">Виждаме, че тук обемът на чашата е 339.39 куб. см, тоест можем да отмерим с нея  голяма част от необходимото количество.</p>
+	</li>
+</ul>
 
+<h3>Задача №2</h3>
+<a href = "cylinderTask2.png" taget="_blank"><img  src ="cylinderTask2.png" class = "img2"  width = 20% height = 20%></a>
+<p style ="margin-top:5%; margin-bottom:8%; margin-right:10%">
+	<br>Пресмятаме, че радиусът е приблизително 4.51 см, тоест диаметърът ще е 9.02. Опитваме се да напаснем обемът на цилиндъра да е равен на 980 куб.см.
+	Получаваме, че височината е приблизително 15.4 см.</p>
+<h3>Задача №3</h3>
+<p>Работим на същия принцип като в задача №1.</p>
+<ul>
+	<li>
+	<a href ="coneTask1_1.png"  target="_blank"><img style="float:right;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;"  class = "thumbnail" src = "coneTask1_1.png" >
+	</a>
+	<p style ="margin-bottom :1%; padding-top :5%">Виждаме, че тук обемът на  е 425.69 куб. см, тоест ще успеем да съберем 250 грама захар в нея.</p>
+	</li>
+	<li>
+	<a href = "coneTask1_2.png" taget="_blank"><img style="float:right;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="coneTask1_2.png" class = "thumbnail" ></a>
+	<p style ="margin-bottom :1%; padding-top :12%">Виждаме, че тук обемът на купичката е 38.75 куб. см, тоест нe e възможно да съберем 250 грама захар в нея.</p>
+	</li>
+	<li>
+	<a href = "coneTask1_3.png" target = "_blank"> <img  style="float:right; margin-bottom:3%;border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="coneTask1_3.png" class = "thumbnail" ></a>
+	<p style ="margin-bottom :10%; padding-top :12%">Виждаме, че тук обемът на купичката е 265.46 куб. см, тоест  ще успеем да съберем 250 грама захар в нея.</p>
+	</li>
+</ul>
 
+<h3>Задача №4</h3>
+<p>Ще разгледаме отделните части на бутилката и ще намерим техните обеми. Обемът на бутилката е сборът от обемите на съставните ѝ части.</p>
+<p>Разполагаме с два цилиндъра, единият с радиус 2.5 см и височина 13 см, другият с радиус 1.5 и височина 3 см. Имаме един пресечен конус с радиус на долната основа 2.5 см, на горнаата основа 1.5 и височина 4 см.</p>
+<ul>
+	<li>
+	<a href = "task4_1.png" target = "_blank"> <img class ="thumbnail" style=" margin-bottom:3%;margin-left:1%;float:left; border: solid 1px whitesmoke;
+	box-shadow: 0 0 5px 0px whitesmoke;" src ="task4_1.png" height= 25%, width=25%></a>
+	<p style ="margin-bottom :10%; padding-top :9%">Чертаем първия цилиндър и виждаме, че неговият обем е 1021 куб. см.</p>
+	</li>
+	<li>
+		<a href = "task4_2.png" target = "_blank"> <img class ="thumbnail" style=" margin-bottom:3%;margin-left:1%;float:left; border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="task4_2.png" height= 25%, width=25%></a>
+		<p style ="margin-bottom :11%; padding-top :8%">Чертаем пресечения конус и виждаме, че неговият обем е 51 куб. см.</p>
+	</li>
+	<li>
+		<a href = "task4_3.png" target = "_blank"> <img class ="thumbnail" style=" margin-bottom:3%;margin-left:1%;float:left; border: solid 1px whitesmoke;
+		box-shadow: 0 0 5px 0px whitesmoke;" src ="task4_3.png" height= 25%, width=25%></a>
+		<p style ="margin-bottom :10%; padding-top :9%">Чертаем втория цилиндър и виждаме, че неговият обем е 85 куб. см.</p>
+	</li>
+	<li>Следователно обемът на цялата бутилка е 1021 + 51 + 85 = 1157 куб. см.</li>
+</ul>
+
+<h4>Соня Николова | 2022г.</h4>
 </body>
 </html>

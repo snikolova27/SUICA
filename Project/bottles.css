@@ -27,8 +27,8 @@ h1
 h2
 {
     font-size : 2em;
-	margin-top: 2%;
-    border-bottom: 1px dashed whitesmoke;
+	margin-top: 4%;
+    border-bottom: 4px dashed whitesmoke;
 	text-align: left;
 	margin-bottom: 1%;
 	text-shadow: 0 0 1px whitesmoke;
@@ -89,6 +89,10 @@ p
 	margin-bottom : 2%;
 }
 
+a
+{
+	text-decoration: none;
+}
 .navigation
 {
 	background-color: #e8b0e7;
@@ -138,8 +142,10 @@ canvas, .block
 	display: block;
 	margin: 0.5em auto 0 auto;
 	border: dotted 1px indigo;
-	box-shadow: 0 0 25px 0px indigo;
+	box-shadow: 0 0 15px 0px indigo;
 	background-color: #e8b0e7;
+	width: 800px;
+	
 }
 .value {
 	text-align: left;
@@ -162,4 +168,11 @@ canvas, .block
 	background-color:transparent;
 	z-index:10;
 	pointer-events: none;
+}
+
+.thumbnail
+{
+	width: 250px;
+	margin-left: 15%;
+	margin-right : 10%;
 }
